@@ -21,10 +21,12 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Compile hooks and scripts
-        run: python -m py_compile hooks/*.py skills/session-context/scripts/session_context.py
+        run: python -m py_compile hooks/*.py skills/*/scripts/*.py
       - name: Check install.sh syntax
         run: bash -n install.sh
       - name: Watcher test suite
         run: python tests/test_watch.py
+      - name: PR reviewer test suite
+        run: python tests/test_pr_review.py
       - name: No private paths in the tree
         run: "! grep -rnE '/home/[a-z]+/' --exclude-dir=.git --exclude-dir=vendor ."

@@ -43,6 +43,8 @@ link "$SQUAD/hooks/squad-switch.py" "$CLAUDE/hooks/squad-switch.py" || rc=1
 link "$SQUAD/hooks/squad-turn.py" "$CLAUDE/hooks/squad-turn.py" || rc=1
 mkdir -p "$HOME/.local/bin"       # the merge queue is called by name: `squad-turn request`
 link "$SQUAD/hooks/squad-turn.py" "$HOME/.local/bin/squad-turn" || rc=1
+# the PR reviewer is called by name too, by the pull-request-reviewer agent and by people
+link "$SQUAD/skills/pr-review/scripts/pr_review.py" "$HOME/.local/bin/pr-review" || rc=1
 
 echo
 echo "New agents and skills only show up in sessions started after this step."

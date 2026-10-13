@@ -39,6 +39,10 @@ RULES = [
      r"|how much is left|next block|next step (of|for) the project|prioriti[sz]e|priority|replan|break down into cards|decompose|plan the week|which project)",
      "product -> `product` agent (real state of the repo, smallest increment, cards in AgenFK)."),
 
+    (r"\b(revis[ae]r? (a |essa |esta )?(pr|pull request)\b|o que (essa|esta|a) (pr|pull request) faz|resum[eo] da (pr|pull request)\b"
+     r"|review (this |the )?(pr|pull request)\b|what does (this|the) (pr|pull request) do|summari[sz]e (this|the) (pr|pull request)\b)",
+     "open PR review -> `pull-request-reviewer` agent (DeepSeek flash via `pr-review`; prints what the PR does and the findings; never posts)."),
+
     (r"\b(revisao independente|verificar a branch|verificador|mutacao|mutation|antes do pr|antes de abrir o pr|pode mergear|esta pronto para merge"
      r"|independent review|verify the branch|verifier|before the pr|before opening the pr|can i merge|ready to merge)",
      "verification -> `verifier` agent (clean context, mutation, SHIP/FIX_FIRST/REJECT)."),

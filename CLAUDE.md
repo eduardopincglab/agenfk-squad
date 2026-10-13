@@ -13,6 +13,7 @@ Source: the `agenfk-squad` repository (linked into `~/.claude/` by `install.sh`)
 | Screen, component, landing page, dashboard, design system, tokens, motion, Figma → code, art, poster, banner | `frontend` | yes, same regime |
 | TEST: the card's tests, regression, coverage | `tester` (Sonnet) | test files only |
 | REVIEW / ADVERSARIAL / MUTATE / VERIFY: before every PR | `verifier` (Sonnet) | no |
+| An open PR a human must approve; "review PR 12", "what does this PR do" | `pull-request-reviewer` (DeepSeek flash via pi) | no, prints only |
 | `infra/`, terraform, CI/CD, Dockerfile, cloud | `infra` | yes, stops at `plan` |
 | Cloud cost, token cost, stack decision | `finops` | no |
 | Pricing, margin, unit economics, portfolio | `finance` | no |
@@ -40,7 +41,10 @@ Source: the `agenfk-squad` repository (linked into `~/.claude/` by `install.sh`)
 5. **Only the main session advances a card** (`agenfk verify <id> --evidence ...`),
    with the evidence returned by the agents. No squad agent merges, runs
    `apply`, deploys, sends messages or publishes. Only `github` opens a PR, when the
-   flow asks for it and the `verifier` returned SHIP.
+   flow asks for it and the `verifier` returned SHIP. Once a PR is open, and only on a
+   repository whose owner has agreed that its code may go to OpenRouter, dispatch
+   `pull-request-reviewer` with its number and repository and relay the two sections
+   it prints; posting the review stays a human decision.
 6. **New cloud resource or stack choice** → `finops` quotes it before `infra`
    writes.
 7. **Context is a budget, and the main session is the orchestrator that

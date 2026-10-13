@@ -64,7 +64,8 @@ CLAUDE_CONFIG_DIR=/tmp/claude-test HOME=/tmp/claude-test-home ./install.sh
 
 ```bash
 python3 tests/test_watch.py
-python3 -m py_compile hooks/*.py skills/session-context/scripts/session_context.py
+python3 tests/test_pr_review.py
+python3 -m py_compile hooks/*.py skills/*/scripts/*.py
 bash -n install.sh
 ```
 

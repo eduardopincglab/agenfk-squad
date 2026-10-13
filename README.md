@@ -3,7 +3,7 @@
 [![tests](https://github.com/eduardopin/agenfk-squad/actions/workflows/tests.yml/badge.svg)](https://github.com/eduardopin/agenfk-squad/actions/workflows/tests.yml)
 [![license: ISC](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
-**A squad of eleven Claude Code agents, and a watcher that keeps them honest, built on [AgenFK](https://github.com/cglab-public/agenfk).**
+**A squad of twelve Claude Code agents, and a watcher that keeps them honest, built on [AgenFK](https://github.com/cglab-public/agenfk).**
 
 AgenFK gives an AI coding session a board, a flow and gates: no card, no edit; no
 evidence, no next step. The squad adds what a single gated session still lacks
@@ -127,6 +127,7 @@ agent that owns it and the evidence `agenfk verify` has to carry.
 | `frontend` | Interface, components, design systems, motion, visual pieces, with a measured quality floor | Yes | inherit |
 | `tester` | Writes the card's tests and proves by mutation that each one can fail | Test files only | Sonnet |
 | `verifier` | Independent review in a clean context: REVIEW, ADVERSARIAL, MUTATE, VERIFY. Returns `SHIP`, `FIX_FIRST` or `REJECT` | No | Sonnet |
+| `pull-request-reviewer` | Reviews an open PR for the human reviewers and prints what it does and its findings. Runs `pr-review`, which uses the newest DeepSeek flash through pi | No | Haiku, review on DeepSeek |
 | `infra` | Terraform, CI/CD, Dockerfiles. Stops at `plan` | Yes, never `apply` | inherit |
 | `finops` | Prices a cloud design line by line; measures token spend per card and model | No | inherit |
 | `finance` | Unit economics, pricing, margin, break-even | No | inherit |

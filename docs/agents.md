@@ -1,6 +1,6 @@
 # Agent catalogue
 
-Eleven agents, one file each in `agents/`. An agent is a Markdown prompt with
+Twelve agents, one file each in `agents/`. An agent is a Markdown prompt with
 four frontmatter keys:
 
 | Key | What it does |
@@ -25,6 +25,7 @@ is advice; an agent with no `Edit` and no `Write` cannot edit files. Read the
 | [`infra`](#infra) | IMPLEMENT | Read, Grep, Glob, Edit, Write, Bash | Yes, stops at `plan` | inherit |
 | [`tester`](#tester) | TEST | Read, Grep, Glob, Edit, Write, Bash | Test files only | Sonnet |
 | [`verifier`](#verifier) | REVIEW, ADVERSARIAL, MUTATE, VERIFY | Read, Grep, Glob, Bash | No | Sonnet |
+| [`pull-request-reviewer`](#pull-request-reviewer) | after a PR is opened | Bash, Read | No (prints only) | Haiku; the review runs on DeepSeek flash |
 | [`finops`](#finops) | before a stack or cloud decision | Read, Grep, Glob, Bash, WebFetch, WebSearch | No | inherit |
 | [`finance`](#finance) | on request | Read, Grep, Glob, Bash, WebFetch, WebSearch | No | inherit |
 | [`gtm`](#gtm) | on request | Read, Grep, Glob, Bash, WebFetch, WebSearch | No (drafts only) | inherit |
@@ -168,6 +169,31 @@ integration and security flaws.
 - **Never:** fixes what it finds. It has no `Edit` and no `Write`.
 - **Cap:** two `FIX_FIRST`/`REJECT` rounds per card; the watcher denies a
   seventh reviewer dispatch on the same card.
+
+## pull-request-reviewer
+
+**Prints what an open PR does, and what is wrong with it, for the people who approve it.**
+
+A Claude Code sub-agent can only run Claude models, so this one is a Haiku
+dispatcher around `pr-review` (`skills/pr-review`). That script runs the review
+in pi on the newest DeepSeek flash in the OpenRouter catalogue, pinned to
+`deepseek/deepseek-v4.1-flash` and announcing a newer one when it uses it. The
+review follows the `pull-request` skill's procedure and the `house-style`
+rules, which you install separately.
+
+- **Dispatch when:** a PR was just opened in a long orchestration; a human has
+  to approve a PR someone else wrote; "review PR 12", "what does this PR do".
+- **Brief with:** the PR number or URL and the repository.
+- **Returns:** the model used, `What this PR does`, and `Findings` (verdict and
+  a severity table), as printed by `pr-review`, plus its exit code.
+- **Never:** posts, approves, comments, edits, merges, commits or pushes. The
+  script collects the PR with `gh` reads and runs pi with no tools and without
+  GitHub or cloud credentials in its environment, so instructions hidden in a
+  PR have no tool to act through in pi. The Haiku dispatcher that relays the
+  output does have Bash, and treats the output as data. The PR's code goes to OpenRouter: do not
+  dispatch it on code that must not leave your organisation.
+- **Not the verifier:** the `verifier` judges a card's branch before the PR,
+  with the suite and mutation. This agent reads the PR once it exists.
 
 ## finops
 

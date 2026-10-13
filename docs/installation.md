@@ -49,6 +49,7 @@ and, so that the merge queue can be called by name:
 | Link | Target |
 |---|---|
 | `~/.local/bin/squad-turn` | `hooks/squad-turn.py` |
+| `~/.local/bin/pr-review` | `skills/pr-review/scripts/pr_review.py` |
 
 Make sure `~/.local/bin` is on your `PATH`.
 
@@ -157,7 +158,7 @@ squad-turn status
 python3 tests/test_watch.py
 ```
 
-In the session, `/agents` should list the eleven squad agents, and a prompt
+In the session, `/agents` should list the twelve squad agents, and a prompt
 such as `how much is left on this epic?` should come back with a
 `[squad route]` hint.
 
